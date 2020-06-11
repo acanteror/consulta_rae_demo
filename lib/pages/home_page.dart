@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumberdash/lumberdash.dart';
 import 'package:rae_test/bloc/rae/rae_bloc.dart';
 import 'package:rae_test/pages/result_page.dart';
+import 'package:rae_test/widgets/title_widget.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -13,11 +14,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String _word;
+  bool _notFound;
 
   @override
   void initState() {
     super.initState();
     _word = '';
+    _notFound = false;
   }
 
   @override
@@ -35,6 +38,7 @@ class _HomePageState extends State<HomePage> {
             if (state is RaeSuccess) {
               setState(() {
                 _word = '';
+                _notFound = false;
               });
               Navigator.push(
                 context,
@@ -46,56 +50,75 @@ class _HomePageState extends State<HomePage> {
             }
           },
           builder: (context, state) {
-            final _showNotFoundIcon = state is RaeNotFound;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Form(
-                    key: _formKey,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
-                        hintText: '¿Qué palabras deseas buscar?'
-                      ),
-                      keyboardType: TextInputType.text,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {
-                        _word = value;
-                      },
-                    )),
-                _showNotFoundIcon
-                    ? Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 14, vertical: 24),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.error,
-                              color: Colors.red,
-                              size: 36,
+            _notFound = state is RaeNotFound;
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 120.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: const TitleWidget(),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 48.0),
+                      child: Form(
+                          key: _formKey,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText: '¿Qué palabra deseas buscar?'),
+                            keyboardType: TextInputType.text,
+                            validator: (value) {
+                              //replace cadena de varios spacios por cadena de un spacio con regex
+                              //split
+                              //comprobar que solo hay una palabra
+                              final _vals = value.split(' ');
+                              if (value.isEmpty) {
+                                return 'Debes introducir una palabra';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              _word = value;
+                            },
+                          )),
+                    ),
+                  ),
+                  _notFound
+                      ? Expanded(
+                          flex: 2,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 24),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.error,
+                                  color: Colors.red,
+                                  size: 36,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 14.0),
+                                  child: Text(
+                                    'La Rae no recoge la palabra \n"${_word.toUpperCase()}"',
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.red),
+                                  ),
+                                )
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 14.0),
-                              child: Text(
-                                'La Rae no recoge la palabra \n${_word.toUpperCase()}',
-                                maxLines: 2,
-                                style:
-                                    TextStyle(fontSize: 16, color: Colors.red),
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    : Container(),
-//              Container(child: Text('lalal'))
-              ],
+                          ),
+                        )
+                      : Expanded(flex: 2, child: Container()),
+//              Container(child: Text('lalal')) //botón restore
+                ],
+              ),
             );
           },
         ),
