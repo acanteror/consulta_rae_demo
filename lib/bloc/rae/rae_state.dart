@@ -18,3 +18,12 @@ class RaeSuccess extends RaeState {
   @override
   List<Object> get props => [result];
 }
+
+class RaeNotFound extends RaeState {
+  final String word;
+
+  RaeNotFound({this.word});
+
+  @override
+  List<Object> get props => [word];
+}
