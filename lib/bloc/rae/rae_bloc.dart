@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:lumberdash/lumberdash.dart';
 import 'package:rae_test/exception/custom_exception.dart';
 import 'package:rae_test/service/rae_service.dart';
-import 'package:rae_test/utils/validate.dart';
 
 part 'rae_event.dart';
 part 'rae_state.dart';
@@ -30,7 +28,7 @@ class RaeBloc extends Bloc<RaeEvent, RaeState> {
     final _word = event.word;
     try {
       final _response = await raeService.search(_word);
-      final _result = validateWord(_word, _response);
+      final _result = _validateWord(_word, _response);
       if (_result) {
         yield RaeSuccess(word: _word, result: _response);
       } else {
@@ -39,5 +37,13 @@ class RaeBloc extends Bloc<RaeEvent, RaeState> {
     } on ResponseException {
       yield RaeError();
     }
+  }
+
+  bool _validateWord(String word, String result) {
+    bool isValid = true;
+    final error = 'Aviso: La palabra $word no está en el Diccionario.';
+    if (result.startsWith(error)) isValid = false;
+    print(isValid);
+    return isValid;
   }
 }
