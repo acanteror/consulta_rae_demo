@@ -11,12 +11,13 @@ class RaeInitial extends RaeState {}
 class RaeError extends RaeState {}
 
 class RaeSuccess extends RaeState {
+  final String word;
   final String result;
 
-  RaeSuccess({this.result});
+  RaeSuccess({this.word, this.result});
 
   @override
-  List<Object> get props => [result];
+  List<Object> get props => [word, result];
 }
 
 class RaeNotFound extends RaeState {

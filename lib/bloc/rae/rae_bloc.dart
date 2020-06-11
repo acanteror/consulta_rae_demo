@@ -32,7 +32,7 @@ class RaeBloc extends Bloc<RaeEvent, RaeState> {
       final _response = await raeService.search(_word);
       final _result = validateWord(_word, _response);
       if (_result) {
-        yield RaeSuccess(result: _response);
+        yield RaeSuccess(word: _word, result: _response);
       } else {
         yield RaeNotFound(word: _word);
       }
