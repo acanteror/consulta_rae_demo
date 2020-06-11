@@ -1,25 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rae_test/bloc/rae/rae_bloc.dart';
 
-class ReusltPage extends StatelessWidget {
-  const ReusltPage({Key key}) : super(key: key);
+class ResultPage extends StatelessWidget {
+  const ResultPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('RESULT'));
+    String _word = ''; 
+    String _result = '';
+    return BlocBuilder<RaeBloc, RaeState>(
+      builder: (context, state) {
+        if (state is RaeSuccess) {
+          _word = state.word;
+          _result = state.result;
+        }
+        return Scaffold(
+            appBar: AppBar(
+              title: Text(_word.toUpperCase()),
+            ),
+            body: SingleChildScrollView(
+                          child: Container(
+                  padding: EdgeInsets.all(18),
+                  alignment: Alignment.bottomLeft,
+                  child: Text(_result,
+                      style: TextStyle(
+                        fontSize: 18,
+                      ))),
+            ));
+      }
+    );
   }
 }
 
-// Container(
-//     padding: EdgeInsets.all(18),
-//     child: Icon(
-//       _result ? Icons.check : Icons.error,
-//       color: _result ? Colors.green : Colors.red,
-//       size: 36,
-//     )),
-// Container(
-//     padding: EdgeInsets.all(18),
-//     alignment: Alignment.bottomLeft,
-//     child: Text(_data,
-//         style: TextStyle(
-//           fontSize: 18,
-//         )))
