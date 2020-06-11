@@ -18,12 +18,13 @@ dependencies:
   html: ^0.14.0+3
   flutter_bloc: ^4.0.0
   equatable: ^1.2.0
+  lumberdash: ^2.1.1
+  colorize_lumberdash: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lumberdash: ^2.1.1
-  colorize_lumberdash: ^2.1.0
+  
 
 # The following section is specific to Flutter.
 flutter:
