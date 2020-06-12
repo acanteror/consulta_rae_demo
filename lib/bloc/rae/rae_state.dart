@@ -6,9 +6,20 @@ abstract class RaeState extends Equatable {
   List<Object> get props => [];
 }
 
-class RaeInitial extends RaeState {}
+class RaeInitial extends RaeState {
+  final String word;
+  final bool notFound;
+  final bool searchFAB;
 
-class RaeError extends RaeState {}
+  RaeInitial({
+    this.word = '',
+    this.notFound = false,
+    this.searchFAB = true,
+  });
+
+  @override
+  List<Object> get props => [word, notFound, searchFAB];
+}
 
 class RaeLoading extends RaeState {}
 
@@ -23,10 +34,18 @@ class RaeSuccess extends RaeState {
 }
 
 class RaeNotFound extends RaeState {
-  final String word;
+    final String word;
+  final bool notFound;
+  final bool searchFAB;
 
-  RaeNotFound({this.word});
+  RaeNotFound({
+    this.word,
+    this.notFound = true,
+    this.searchFAB = false,
+  });
 
   @override
-  List<Object> get props => [word];
+  List<Object> get props => [word, notFound, searchFAB];
 }
+
+class RaeError extends RaeState {}

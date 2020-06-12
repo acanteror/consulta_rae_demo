@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rae_test/bloc/rae/rae_bloc.dart';
 import 'package:rae_test/extension/context_extension.dart';
 
-class WordForm extends StatelessWidget {
+class WordForm extends StatefulWidget {
   const WordForm({
     Key key,
     @required GlobalKey<FormState> formKey,
@@ -13,9 +13,14 @@ class WordForm extends StatelessWidget {
   final GlobalKey<FormState> _formKey;
 
   @override
+  _WordFormState createState() => _WordFormState();
+}
+
+class _WordFormState extends State<WordForm> {
+  @override
   Widget build(BuildContext context) {
     return Form(
-        key: _formKey,
+        key: widget._formKey,
         child: TextFormField(
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(context.pcw(2)),

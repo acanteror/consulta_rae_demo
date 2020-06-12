@@ -15,7 +15,12 @@ class ResultPage extends StatelessWidget {
         _word = state.word;
         _result = state.result;
       }
-      return Scaffold(
+      return WillPopScope(
+        onWillPop: () async {
+          context.bloc<RaeBloc>().add(RaeRestore());
+          return true;
+        },
+        child: Scaffold(
           appBar: AppBar(
             title: Text(_word.toUpperCase()),
           ),
@@ -27,7 +32,9 @@ class ResultPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: context.pcw(4),
                     ))),
-          ));
+          ),
+        ),
+      );
     });
   }
 }
