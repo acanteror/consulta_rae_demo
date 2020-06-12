@@ -73,13 +73,15 @@ class _HomePageState extends State<HomePage> {
                                 hintText: '¿Qué palabra deseas buscar?'),
                             keyboardType: TextInputType.text,
                             validator: (value) {
-                              //replace cadena de varios spacios por cadena de un spacio con regex
-                              //split
-                              //comprobar que solo hay una palabra
-                              final _vals = value.split(' ');
                               if (value.isEmpty) {
-                                return 'Debes introducir una palabra';
+                                return 'Debes introducir al menos una palabra';
                               }
+
+                              final _subValues = _removeSpaces(value).split(' ');
+                              if (_subValues.length > 1) {
+                                return 'Debes introducir solo una palabra';
+                              }
+                              
                               return null;
                             },
                             onChanged: (value) {
@@ -134,5 +136,9 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.search),
       ),
     );
+  }
+
+  String _removeSpaces(String input) {
+    return input.replaceAll(RegExp('/ */g '), ' ');
   }
 }
