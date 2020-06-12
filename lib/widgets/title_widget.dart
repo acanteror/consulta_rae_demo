@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rae_test/extension/context_extension.dart';
 
 class TitleWidget extends StatelessWidget {
   final double fontSize;
@@ -12,7 +13,7 @@ class TitleWidget extends StatelessWidget {
       text: TextSpan(
         text: 'CONSULTA',
         style: TextStyle(
-          fontSize: fontSize,
+          fontSize: context.pcw(8),
           fontWeight: FontWeight.bold,
           color: Colors.black,
         ),
