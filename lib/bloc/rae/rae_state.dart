@@ -10,6 +10,8 @@ class RaeInitial extends RaeState {}
 
 class RaeError extends RaeState {}
 
+class RaeLoading extends RaeState {}
+
 class RaeSuccess extends RaeState {
   final String word;
   final String result;

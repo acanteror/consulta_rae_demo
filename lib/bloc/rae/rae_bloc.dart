@@ -22,6 +22,10 @@ class RaeBloc extends Bloc<RaeEvent, RaeState> {
     if (event is RaeSubmit) {
       yield* _submitToState(event);
     }
+
+    if (event is RaeRestore) {
+      yield RaeInitial();
+    }
   }
 
   Stream<RaeState> _submitToState(RaeSubmit event) async* {
