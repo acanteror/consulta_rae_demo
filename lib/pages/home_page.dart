@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumberdash/lumberdash.dart';
 import 'package:rae_test/bloc/rae/rae_bloc.dart';
 import 'package:rae_test/pages/result_page.dart';
+import 'package:rae_test/widgets/not_found_alert.dart';
 import 'package:rae_test/widgets/title_widget.dart';
 import 'package:rae_test/extension/context_extension.dart';
 
@@ -33,7 +34,6 @@ class _HomePageState extends State<HomePage> {
         child: BlocConsumer<RaeBloc, RaeState>(
           listener: (context, state) {
             if (state is RaeError) {
-              //todo: show dialog
               logError('Error');
             }
             if (state is RaeSuccess) {
@@ -100,27 +100,7 @@ class _HomePageState extends State<HomePage> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: context.pcw(2),
                                 vertical: context.pcw(6)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.error,
-                                  color: Colors.red,
-                                  size: context.pcw(10),
-                                ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(left: context.pcw(5)),
-                                  child: Text(
-                                    'La Rae no recoge la palabra \n"${_word.toUpperCase()}"',
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                        fontSize: context.pcw(4),
-                                        color: Colors.red),
-                                  ),
-                                )
-                              ],
-                            ),
+                            child: NotFoundAlert(word: _word),
                           ),
                         )
                       : Expanded(flex: 2, child: Container()),
@@ -133,7 +113,6 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           if (_formKey.currentState.validate()) {
-            print(_word);
             context.bloc<RaeBloc>().add(RaeSubmit(word: _word));
           }
         },
