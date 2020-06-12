@@ -19,12 +19,17 @@ class RaeBloc extends Bloc<RaeEvent, RaeState> {
   Stream<RaeState> mapEventToState(
     RaeEvent event,
   ) async* {
+    yield RaeLoading();
     if (event is RaeSubmit) {
       yield* _submitToState(event);
     }
 
     if (event is RaeRestore) {
       yield RaeInitial();
+    }
+
+    if (event is RaeValidate) {
+      yield RaeNotValid(word: state.word, notFound: state.notFound, searchFAB: false);
     }
   }
 
@@ -34,7 +39,12 @@ class RaeBloc extends Bloc<RaeEvent, RaeState> {
       final _response = await raeService.search(_word);
       final _result = _validateWord(_word, _response);
       if (_result) {
-        yield RaeSuccess(word: _word, result: _response);
+        yield RaeSuccess(
+          word: _word,
+          result: _response,
+          notFound: state.notFound,
+          searchFAB: state.searchFAB,
+        );
       } else {
         yield RaeNotFound(word: _word);
       }

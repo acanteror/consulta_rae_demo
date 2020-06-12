@@ -28,6 +28,10 @@ class _WordFormState extends State<WordForm> {
                 hintStyle: TextStyle(fontSize: context.pcw(4))),
             keyboardType: TextInputType.text,
             validator: (value) {
+              final _validation = _validate(value);
+              if (_validation != null) {
+                context.bloc<RaeBloc>().add(RaeValidate());
+              }
               return _validate(value);
             },
             onSaved: (value) {
