@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lumberdash/lumberdash.dart';
 import 'package:rae_test/bloc/rae/rae_bloc.dart';
 import 'package:rae_test/pages/result_page.dart';
-import 'package:rae_test/widgets/not_found_alert.dart';
+import 'package:rae_test/widgets/not_found_alert_widget.dart';
 import 'package:rae_test/widgets/title_widget.dart';
+import 'package:rae_test/widgets/word_form.dart';
 import 'package:rae_test/extension/context_extension.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,12 +18,22 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String _word;
   bool _notFound;
+  bool _searchFAB;
 
   @override
   void initState() {
     super.initState();
     _word = '';
     _notFound = false;
+    _searchFAB = true;
+  }
+
+  void _resetState() {
+    setState(() {
+      _word = '';
+      _notFound = false;
+      _searchFAB = true;
+    });
   }
 
   @override
@@ -37,10 +48,7 @@ class _HomePageState extends State<HomePage> {
               logError('Error');
             }
             if (state is RaeSuccess) {
-              setState(() {
-                _word = '';
-                _notFound = false;
-              });
+              _resetState();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ResultPage()),
@@ -48,81 +56,98 @@ class _HomePageState extends State<HomePage> {
             }
             if (state is RaeNotFound) {
               _word = state.word;
+              setState(() {
+                _searchFAB = false;
+              });
+            }
+            if (state is RaeInitial) {
+              _resetState();
             }
           },
           builder: (context, state) {
             _notFound = state is RaeNotFound;
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: context.pcw(32)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: const TitleWidget(),
+            return Stack(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: context.pcw(32)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: const TitleWidget(),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: context.pcw(12)),
+                          child: WordForm(formKey: _formKey),
+                        ),
+                      ),
+                      _notFound
+                          ? Expanded(
+                              flex: 2,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: context.pcw(2),
+                                    vertical: context.pcw(6)),
+                                child: NotFoundAlertWidget(word: _word),
+                              ),
+                            )
+                          : Expanded(flex: 2, child: Container()),
+                    ],
                   ),
-                  Expanded(
-                    flex: 4,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: context.pcw(12)),
-                      child: Form(
-                          key: _formKey,
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(context.pcw(2)),
-                                hintText: '¿Qué palabra deseas buscar?',
-                                hintStyle: TextStyle(fontSize: context.pcw(4))),
-                            keyboardType: TextInputType.text,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Debes introducir al menos una palabra';
-                              }
-
-                              final _subValues =
-                                  _removeSpaces(value).split(' ');
-                              if (_subValues.length > 1) {
-                                return 'Debes introducir solo una palabra';
-                              }
-
-                              return null;
-                            },
-                            onChanged: (value) {
-                              _word = value;
-                            },
-                          )),
-                    ),
-                  ),
-                  _notFound
-                      ? Expanded(
-                          flex: 2,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: context.pcw(2),
-                                vertical: context.pcw(6)),
-                            child: NotFoundAlert(word: _word),
-                          ),
-                        )
-                      : Expanded(flex: 2, child: Container()),
-                ],
-              ),
+                ),
+                Container(),
+              ],
             );
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          if (_formKey.currentState.validate()) {
-            context.bloc<RaeBloc>().add(RaeSubmit(word: _word));
-          }
-        },
-        tooltip: 'Search',
-        child: Icon(Icons.search),
-      ),
+      floatingActionButton: _searchFAB
+          ? _SearchFABWidget(formKey: _formKey)
+          : _RestoreFABWidget(),
     );
   }
+}
 
-  String _removeSpaces(String input) {
-    return input.replaceAll(RegExp('/ */g '), ' ');
+class _RestoreFABWidget extends StatelessWidget {
+  const _RestoreFABWidget({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+        onPressed: () {
+          context.bloc<RaeBloc>().add(RaeRestore());
+        },
+        tooltip: 'Restaurar',
+        child: Icon(Icons.restore),
+      );
+  }
+}
+
+class _SearchFABWidget extends StatelessWidget {
+  const _SearchFABWidget({
+    Key key,
+    @required GlobalKey<FormState> formKey,
+  }) : _formKey = formKey, super(key: key);
+
+  final GlobalKey<FormState> _formKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+        onPressed: () async {
+          if (_formKey.currentState.validate()) {
+            _formKey.currentState.save();
+          }
+        },
+        tooltip: 'Consultar',
+        child: Icon(Icons.search),
+      );
   }
 }
