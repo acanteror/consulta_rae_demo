@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rae_test/extension/context_extension.dart';
 
 class TitleWidget extends StatelessWidget {
-  final double fontSize;
-
-  const TitleWidget({this.fontSize = 30});
+  const TitleWidget();
 
   @override
   Widget build(BuildContext context) {

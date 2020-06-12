@@ -9,6 +9,7 @@ import 'pages/home_page.dart';
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
   putLumberdashToWork(withClients: [ColorizeLumberdash()]);
+  
   runApp(MyApp());
 }
 
