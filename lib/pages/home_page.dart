@@ -4,6 +4,7 @@ import 'package:lumberdash/lumberdash.dart';
 import 'package:rae_test/bloc/rae/rae_bloc.dart';
 import 'package:rae_test/pages/result_page.dart';
 import 'package:rae_test/widgets/title_widget.dart';
+import 'package:rae_test/extension/context_extension.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           builder: (context, state) {
             _notFound = state is RaeNotFound;
             return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 120.0),
+              padding: EdgeInsets.symmetric(vertical: context.pcw(32)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -64,24 +65,26 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     flex: 4,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 48.0),
+                      padding: EdgeInsets.symmetric(vertical: context.pcw(12)),
                       child: Form(
                           key: _formKey,
                           child: TextFormField(
                             decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(8),
-                                hintText: '¿Qué palabra deseas buscar?'),
+                                contentPadding: EdgeInsets.all(context.pcw(2)),
+                                hintText: '¿Qué palabra deseas buscar?',
+                                hintStyle: TextStyle(fontSize: context.pcw(4))),
                             keyboardType: TextInputType.text,
                             validator: (value) {
                               if (value.isEmpty) {
                                 return 'Debes introducir al menos una palabra';
                               }
 
-                              final _subValues = _removeSpaces(value).split(' ');
+                              final _subValues =
+                                  _removeSpaces(value).split(' ');
                               if (_subValues.length > 1) {
                                 return 'Debes introducir solo una palabra';
                               }
-                              
+
                               return null;
                             },
                             onChanged: (value) {
@@ -95,22 +98,25 @@ class _HomePageState extends State<HomePage> {
                           flex: 2,
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 24),
+                                horizontal: context.pcw(2),
+                                vertical: context.pcw(6)),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Icon(
                                   Icons.error,
                                   color: Colors.red,
-                                  size: 36,
+                                  size: context.pcw(10),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 14.0),
+                                  padding:
+                                      EdgeInsets.only(left: context.pcw(5)),
                                   child: Text(
                                     'La Rae no recoge la palabra \n"${_word.toUpperCase()}"',
                                     maxLines: 2,
                                     style: TextStyle(
-                                        fontSize: 16, color: Colors.red),
+                                        fontSize: context.pcw(4),
+                                        color: Colors.red),
                                   ),
                                 )
                               ],
@@ -118,7 +124,6 @@ class _HomePageState extends State<HomePage> {
                           ),
                         )
                       : Expanded(flex: 2, child: Container()),
-//              Container(child: Text('lalal')) //botón restore
                 ],
               ),
             );
