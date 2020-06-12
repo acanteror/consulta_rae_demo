@@ -4,6 +4,8 @@ import 'package:lumberdash/lumberdash.dart';
 import 'package:rae_test/bloc/rae/rae_bloc.dart';
 import 'package:rae_test/pages/result_page.dart';
 import 'package:rae_test/widgets/not_found_alert_widget.dart';
+import 'package:rae_test/widgets/restore_fab_widget.dart';
+import 'package:rae_test/widgets/search_fab_widget.dart';
 import 'package:rae_test/widgets/title_widget.dart';
 import 'package:rae_test/widgets/word_form.dart';
 import 'package:rae_test/extension/context_extension.dart';
@@ -14,11 +16,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    String _word;
-    bool _notFound;
-    bool _searchFAB;
-
-    print('here');
 
     return BlocConsumer<RaeBloc, RaeState>(listener: (context, state) {
       if (state is RaeError) {
@@ -30,22 +27,16 @@ class HomePage extends StatelessWidget {
           MaterialPageRoute(builder: (context) => ResultPage()),
         );
       }
-    }, builder: (context, state) {
-      if (state is RaeNotFound) {
-        _word = state.word;
-        _searchFAB = state.searchFAB;
-        _notFound = state.notFound;
-      }
       if (state is RaeInitial) {
-        _word = state.word;
-        _searchFAB = state.searchFAB;
-        _notFound = state.notFound;
         _formKey.currentState?.reset();
       }
+    }, builder: (context, state) {
       return Scaffold(
-        floatingActionButton: _searchFAB
-            ? _SearchFABWidget(formKey: _formKey)
-            : _RestoreFABWidget(formKey: _formKey,),
+        floatingActionButton: state.searchFAB
+            ? SearchFABWidget(formKey: _formKey)
+            : RestoreFABWidget(
+                formKey: _formKey,
+              ),
         body: SafeArea(
             child: Stack(
           children: <Widget>[
@@ -60,27 +51,29 @@ class HomePage extends StatelessWidget {
                     child: const TitleWidget(),
                   ),
                   Expanded(
-                    flex: 4,
+                    flex: 3,
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: context.pcw(12)),
                       child: WordForm(formKey: _formKey),
                     ),
                   ),
-                  _notFound
+                  state.notFound
                       ? Expanded(
                           flex: 2,
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: context.pcw(2),
                                 vertical: context.pcw(6)),
-                            child: NotFoundAlertWidget(word: _word),
+                            child: NotFoundAlertWidget(word: state.word),
                           ),
                         )
                       : Expanded(flex: 2, child: Container()),
                 ],
               ),
             ),
-            Container(),
+            state is RaeLoading
+                ? Center(child: CircularProgressIndicator())
+                : Container(),
           ],
         )),
       );
@@ -88,46 +81,3 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class _RestoreFABWidget extends StatelessWidget {
-  const _RestoreFABWidget({
-    Key key,
-    @required GlobalKey<FormState> formKey,
-  })  : _formKey = formKey,
-        super(key: key);
-
-  final GlobalKey<FormState> _formKey;
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {
-        _formKey.currentState.reset();
-        context.bloc<RaeBloc>().add(RaeRestore());
-      },
-      tooltip: 'Restaurar',
-      child: Icon(Icons.restore),
-    );
-  }
-}
-
-class _SearchFABWidget extends StatelessWidget {
-  const _SearchFABWidget({
-    Key key,
-    @required GlobalKey<FormState> formKey,
-  })  : _formKey = formKey,
-        super(key: key);
-
-  final GlobalKey<FormState> _formKey;
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () async {
-        if (_formKey.currentState.validate()) {
-          _formKey.currentState.save();
-        }
-      },
-      tooltip: 'Consultar',
-      child: Icon(Icons.search),
-    );
-  }
-}
