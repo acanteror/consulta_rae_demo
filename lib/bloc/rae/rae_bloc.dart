@@ -10,7 +10,7 @@ part 'rae_state.dart';
 
 class RaeBloc extends Bloc<RaeEvent, RaeState> {
   RaeService raeService;
-  RaeBloc({raeService}) : this.raeService = raeService ?? RaeService();
+  RaeBloc({raeService}) : this.raeService = RaeService();
 
   @override
   RaeState get initialState => RaeInitial();
@@ -43,7 +43,6 @@ class RaeBloc extends Bloc<RaeEvent, RaeState> {
     bool isValid = true;
     final error = 'Aviso: La palabra $word no está en el Diccionario.';
     if (result.startsWith(error)) isValid = false;
-    print(isValid);
     return isValid;
   }
 }
