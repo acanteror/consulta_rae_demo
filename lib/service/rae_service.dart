@@ -1,4 +1,4 @@
-import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:rae_test/api/rae_api.dart';
 import 'package:rae_test/exception/custom_exception.dart';
@@ -7,21 +7,9 @@ abstract class RaeService {
   Future<String> consult(String word);
 }
 class RaeServiceImpl extends RaeService {
-  final RaeApiImpl raeApi;
+  final RaeApi raeApi = Get.find();
 
-  RaeServiceImpl({raeApi}): this.raeApi = RaeApiImpl() ;
-
-  Future<String> search(String word) async {
-    final url = 'https://dle.rae.es/$word';
-
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final element = parse(response.body).getElementById('resultados');
-      return element.text;
-    } else {
-      throw ResponseException(response.statusCode);
-    }
-  }
+  RaeServiceImpl({raeApi});
 
   @override
   Future<String> consult(String word) async {

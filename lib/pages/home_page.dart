@@ -30,13 +30,6 @@ class HomePage extends StatelessWidget {
       }
       if (state is RaeSuccess) {
         Get.to(ResultPage());
-        Get.snackbar(
-          '¡Ups! Error', 
-          'Parece que se ha producido un error que no entraba en nuestros planes',
-          icon: Icon(Icons.error_outline, color: Colors.red,),
-          isDismissible: true,
-          duration: Duration(seconds: 3),
-        );
       }
       if (state is RaeInitial) {
         _formKey.currentState?.reset();
