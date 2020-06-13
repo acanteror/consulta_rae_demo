@@ -9,6 +9,7 @@ The main feature is to consult RAE web dictionary.
 - BLoC with flutter_bloc package
 - http call with http package
 - html parse with html package
+- Extension method
 
 A few resources to get you started if this is your first Flutter project:
 
