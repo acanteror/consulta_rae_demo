@@ -7,7 +7,7 @@ import 'package:rae_test/widgets/not_found_alert_widget.dart';
 import 'package:rae_test/widgets/restore_fab_widget.dart';
 import 'package:rae_test/widgets/search_fab_widget.dart';
 import 'package:rae_test/widgets/title_widget.dart';
-import 'package:rae_test/widgets/word_form.dart';
+import 'package:rae_test/widgets/word_form_widget.dart';
 import 'package:rae_test/extension/context_extension.dart';
 
 class HomePage extends StatelessWidget {
@@ -65,7 +65,7 @@ class HomePage extends StatelessWidget {
                     flex: 3,
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: context.pcw(12)),
-                      child: WordForm(formKey: _formKey),
+                      child: WordFormWidget(formKey: _formKey),
                     ),
                   ),
                   state.notFound
