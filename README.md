@@ -6,10 +6,11 @@ The main feature is to consult RAE web dictionary.
 
 ## Topics
 
-- BLoC with flutter_bloc package
-- http call with http package
-- html parse with html package
 - Extension method
+- BLoC with [flutter_bloc](https://pub.dev/packages/flutter_bloc) package
+- http call with [http](https://pub.dev/packages/http) package
+- html parse with [html](https://pub.dev/packages/html) package
+- Dependency injection and navigation with [get](https://pub.dev/packages/get) package
 
 A few resources to get you started if this is your first Flutter project:
 
