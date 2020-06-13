@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:rae_test/bloc/rae/rae_bloc.dart';
+import 'package:rae_test/bloc/rae_bloc.dart';
 import 'package:rae_test/pages/result_page.dart';
 import 'package:rae_test/widgets/not_found_alert_widget.dart';
 import 'package:rae_test/widgets/restore_fab_widget.dart';
