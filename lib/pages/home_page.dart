@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lumberdash/lumberdash.dart';
+import 'package:get/get.dart';
 import 'package:rae_test/bloc/rae/rae_bloc.dart';
 import 'package:rae_test/pages/result_page.dart';
 import 'package:rae_test/widgets/not_found_alert_widget.dart';
@@ -19,12 +19,23 @@ class HomePage extends StatelessWidget {
 
     return BlocConsumer<RaeBloc, RaeState>(listener: (context, state) {
       if (state is RaeError) {
-        logError('Error');
+        Get.snackbar(
+          '¡Ups! Error', 
+          'Parece que se ha producido un error que no entraba en nuestros planes',
+          icon: Icon(Icons.error_outline, color: Colors.red,),
+          shouldIconPulse: true,
+          isDismissible: true,
+          duration: Duration(seconds: 13),
+        );
       }
       if (state is RaeSuccess) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ResultPage()),
+        Get.to(ResultPage());
+        Get.snackbar(
+          '¡Ups! Error', 
+          'Parece que se ha producido un error que no entraba en nuestros planes',
+          icon: Icon(Icons.error_outline, color: Colors.red,),
+          isDismissible: true,
+          duration: Duration(seconds: 3),
         );
       }
       if (state is RaeInitial) {
@@ -80,4 +91,3 @@ class HomePage extends StatelessWidget {
     });
   }
 }
-
