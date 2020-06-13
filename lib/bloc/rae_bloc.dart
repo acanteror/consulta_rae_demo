@@ -10,7 +10,7 @@ part 'rae_state.dart';
 
 class RaeBloc extends Bloc<RaeEvent, RaeState> {
   RaeService raeService;
-  RaeBloc({raeService}) : this.raeService = RaeService();
+  RaeBloc({raeService}) : this.raeService = RaeServiceImpl();
 
   @override
   RaeState get initialState => RaeInitial();
@@ -29,34 +29,27 @@ class RaeBloc extends Bloc<RaeEvent, RaeState> {
     }
 
     if (event is RaeValidate) {
-      yield RaeNotValid(word: state.word, notFound: state.notFound, searchFAB: false);
+      yield RaeNotValid(
+          word: state.word, notFound: state.notFound, searchFAB: false);
     }
   }
 
   Stream<RaeState> _submitToState(RaeSubmit event) async* {
     final _word = event.word;
     try {
-      final _response = await raeService.search(_word);
-      final _result = _validateWord(_word, _response);
-      if (_result) {
-        yield RaeSuccess(
-          word: _word,
-          result: _response,
-          notFound: state.notFound,
-          searchFAB: state.searchFAB,
-        );
-      } else {
-        yield RaeNotFound(word: _word);
-      }
+      final _description = await raeService.consult(_word);
+      yield RaeSuccess(
+        word: _word,
+        result: _description,
+        notFound: state.notFound,
+        searchFAB: state.searchFAB,
+      );
+      
     } on ResponseException {
       yield RaeError();
-    }
-  }
 
-  bool _validateWord(String word, String result) {
-    bool isValid = true;
-    final error = 'Aviso: La palabra $word no está en el Diccionario.';
-    if (result.startsWith(error)) isValid = false;
-    return isValid;
+    } on WordNotFoundException {
+      yield RaeNotFound(word: _word);
+    }
   }
 }
