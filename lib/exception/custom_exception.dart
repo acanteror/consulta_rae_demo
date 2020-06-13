@@ -11,3 +11,15 @@ class ResponseException implements Exception {
     return "ResponseException: $message";
   }
 }
+
+class WordNotFoundException implements Exception {
+  final word;
+  WordNotFoundException([this.word]);
+
+  call() => logError(this.toString());
+
+  String toString() {
+    if (word == null) return "Exception";
+    return "WordNotFoundException: La RAE no recoge la palabra $word.";
+  }
+}
