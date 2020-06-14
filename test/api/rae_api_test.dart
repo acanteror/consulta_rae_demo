@@ -32,17 +32,15 @@ void main() {
     final tWord = 'word';
     final tResponse = 'html test response';
 
-     test('''should perform a GET request on a URL with word
-       being the endpoint''', () async {
+     test('''should perform a GET request on a URL with word being the endpoint''', () async {
       setUpMockHttpClientSuccess200();
       
       raeApi.fetchData(tWord);
 
-      verify(mockHttpClient.get('$urlBase$tWord'));
+      verify(mockHttpClient.get('$urlBase$tWord')).called(1);
     });
 
-    test('''raeApi.fetchData should return tResponse when 
-    response code is 200 (success)''', () async {
+    test('''raeApi.fetchData should return tResponse when response code is 200 (success)''', () async {
       setUpMockHttpClientSuccess200();
       
       final response = await raeApi.fetchData(tWord);
@@ -50,8 +48,7 @@ void main() {
       expect(response, equals(tResponse));      
     });
 
-    test('''raeApi.fetchData should throw ResponseException when 
-    response code is 404 (or not equal to 200)''', () async {
+    test('''raeApi.fetchData should throw ResponseException when response code is 404 (or not equal to 200)''', () async {
       setUpMockHttpClientFailure404();
       
       final call = raeApi.fetchData(tWord);
