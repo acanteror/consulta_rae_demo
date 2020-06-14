@@ -9,7 +9,7 @@ abstract class RaeApi {
 class RaeApiImpl extends RaeApi {
   final http.Client client;
 
-  RaeApiImpl({this.client});
+  RaeApiImpl({client}) : this.client = client ?? http.Client();
 
 
   @override
