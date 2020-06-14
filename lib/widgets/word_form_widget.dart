@@ -30,7 +30,7 @@ class _WordFormWidgetState extends State<WordFormWidget> {
             validator: (value) {
               final _validation = _validate(value);
               if (_validation != null) {
-                context.bloc<RaeBloc>().add(RaeValidate());
+                context.bloc<RaeBloc>().add(RaeValidationFails());
               }
               return _validate(value);
             },

@@ -25,6 +25,18 @@ class RaeInitial extends RaeState {
   }) : super(word: word, notFound: notFound, searchFAB: searchFAB);
 }
 
+class RaeRestored extends RaeState {
+  final String word;
+  final bool notFound;
+  final bool searchFAB;
+
+  RaeRestored({
+    this.word = '',
+    this.notFound = false,
+    this.searchFAB = true,
+  }) : super(word: word, notFound: notFound, searchFAB: searchFAB);
+}
+
 class RaeLoading extends RaeState {
    final String word;
   final bool notFound;
@@ -51,7 +63,7 @@ class RaeSuccess extends RaeState {
         );
 
   @override
-  List<Object> get props => [result];
+  List<Object> get props => [word, notFound, searchFAB, result];
 }
 
 class RaeNotFound extends RaeState {

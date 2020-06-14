@@ -10,8 +10,8 @@ part 'rae_event.dart';
 part 'rae_state.dart';
 
 class RaeBloc extends Bloc<RaeEvent, RaeState> {
-  RaeService raeService = Get.find();
-  RaeBloc({raeService});
+  RaeService raeService;
+  RaeBloc({raeService}) : this.raeService = raeService ?? Get.find();
 
   @override
   RaeState get initialState => RaeInitial();
@@ -20,16 +20,16 @@ class RaeBloc extends Bloc<RaeEvent, RaeState> {
   Stream<RaeState> mapEventToState(
     RaeEvent event,
   ) async* {
-    yield RaeLoading();
     if (event is RaeSubmit) {
+      yield RaeLoading();
       yield* _submitToState(event);
     }
 
     if (event is RaeRestore) {
-      yield RaeInitial();
+      yield RaeRestored();
     }
 
-    if (event is RaeValidate) {
+    if (event is RaeValidationFails) {
       yield RaeNotValid(
           word: state.word, notFound: state.notFound, searchFAB: false);
     }
@@ -45,10 +45,8 @@ class RaeBloc extends Bloc<RaeEvent, RaeState> {
         notFound: state.notFound,
         searchFAB: state.searchFAB,
       );
-      
     } on ResponseException {
       yield RaeError();
-
     } on WordNotFoundException {
       yield RaeNotFound(word: _word);
     }

@@ -19,4 +19,4 @@ class RaeSubmit extends RaeEvent {
 
 class RaeRestore extends RaeEvent {}
 
-class RaeValidate extends RaeEvent {}
+class RaeValidationFails extends RaeEvent {}
