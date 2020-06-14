@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rae_test/bloc/rae_bloc.dart';
 import 'package:rae_test/extension/context_extension.dart';
+import 'package:rae_test/helper/word_form_validation.dart';
 
 class WordFormWidget extends StatefulWidget {
   const WordFormWidget({
@@ -28,30 +29,14 @@ class _WordFormWidgetState extends State<WordFormWidget> {
                 hintStyle: TextStyle(fontSize: context.pcw(4))),
             keyboardType: TextInputType.text,
             validator: (value) {
-              final _validation = _validate(value);
+              final _validation = validate(value);
               if (_validation != null) {
                 context.bloc<RaeBloc>().add(RaeValidationFails());
               }
-              return _validate(value);
+              return _validation;
             },
             onSaved: (value) {
               context.bloc<RaeBloc>().add(RaeSubmit(word: value));
             }));
-  }
-
-  String _validate(String value) {
-    if (value.isEmpty) {
-      return 'Debes introducir al menos una palabra';
-    }
-
-    if (_removeSpaces(value).split(' ').length > 1) {
-      return 'Debes introducir solo una palabra';
-    }
-
-    return null;
-  }
-
-  String _removeSpaces(String input) {
-    return input.replaceAll(RegExp('/ */g '), ' ');
   }
 }
