@@ -1,0 +1,39 @@
+image: cirrusci/flutter:1.17.1
+
+stages:
+  - build
+  - analyze
+  - test
+
+before_script:
+  - flutter pub get
+  - flutter clean
+
+build:
+  stage: build
+
+  script:
+  - flutter build aot
+  - flutter clean
+
+  #only:
+  #  - merge_requests
+
+unit_test:
+  stage: test
+
+  script:
+    - flutter clean
+    - flutter test
+
+  #only:
+  #  - merge_requests
+
+analyze:
+  stage: analyze
+
+  script:
+    - echo job excluded
+
+  #only:
+  #  - merge_requests
