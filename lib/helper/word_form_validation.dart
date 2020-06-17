@@ -3,17 +3,17 @@ String validate(String value) {
     return 'Debes introducir al menos una palabra';
   }
 
-  if (moreThanOneWord(value)) {
+  if (moreThanOneWord(removeSpaces(value))) {
     return 'Debes introducir solo una palabra';
   }
 
   return null;
-}
+} 
 
-bool moreThanOneWord(String value) {
-  return removeSpaces(value).split(' ').length > 1; 
+bool moreThanOneWord(String words) {
+  return words.split(' ').length > 1; 
 }
 
 String removeSpaces(String value) {
-  return value.replaceAll(RegExp('/ */g'), ' ');
+  return value.replaceAll(RegExp('[ ]{2,}'), ' ');
 }
