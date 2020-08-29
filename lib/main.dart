@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:lumberdash/lumberdash.dart';
 import 'package:colorize_lumberdash/colorize_lumberdash.dart';
 import 'package:rae_test/bloc/rae_bloc.dart';
-import 'package:rae_test/debug/simple_bloc_delegate.dart';
+import 'package:rae_test/debug/my_bloc_observer.dart';
 import 'package:rae_test/di/inyector.dart';
 import 'pages/home_page.dart';
 
