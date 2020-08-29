@@ -5,18 +5,18 @@ class MyBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object event) {
     super.onEvent(bloc, event);
-    logMessage('BlocDelegate :: Event --> $event');
+    logMessage('BlocObserver :: Event --> $event');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    logMessage('BlocDelegate :: Transition --> $transition');
+    logMessage('BlocObserver :: Transition --> $transition');
   }
 
   @override
   void onError(Cubit cubit, Object error, StackTrace stacktrace) {
     super.onError(cubit, error, stacktrace);
-    logError('BlocDelegate :: Error --> $error, $stacktrace');
+    logError('BlocObserver :: Error --> $error, $stacktrace');
   }
 }
