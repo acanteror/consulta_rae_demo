@@ -9,7 +9,7 @@ import 'package:rae_test/di/inyector.dart';
 import 'pages/home_page.dart';
 
 void main() {
-  BlocSupervisor.delegate = SimpleBlocDelegate();
+  Bloc.observer = MyBlocObserver();
   putLumberdashToWork(withClients: [ColorizeLumberdash()]);
   configureInyector();
   runApp(MyApp());

@@ -11,10 +11,9 @@ part 'rae_state.dart';
 
 class RaeBloc extends Bloc<RaeEvent, RaeState> {
   RaeService raeService;
-  RaeBloc({raeService}) : this.raeService = raeService ?? Get.find();
-
-  @override
-  RaeState get initialState => RaeInitial();
+  RaeBloc({raeService})
+      : this.raeService = raeService ?? Get.find(),
+        super(RaeInitial());
 
   @override
   Stream<RaeState> mapEventToState(
