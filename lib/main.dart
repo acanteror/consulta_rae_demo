@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => RaeBloc(),
       child: GetMaterialApp(
-        title: 'Consulta RAE Demo',
+        title: 'ConsultaRae',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.red,
           visualDensity: VisualDensity.adaptivePlatformDensity,
