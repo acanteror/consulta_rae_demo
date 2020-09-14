@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "7268250445",
+    "firebase_url": "https://consulta-rae.firebaseio.com",
+    "project_id": "consulta-rae",
+    "storage_bucket": "consulta-rae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7268250445:android:e64c8023e9010356417d04",
+        "android_client_info": {
+          "package_name": "com.example.rae_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7268250445-daufu4l77jl0d7i92fhv5jng7i9bl1v7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbqFbF4hct3cMqjK2yh_t3lMKNpPJfPQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7268250445-daufu4l77jl0d7i92fhv5jng7i9bl1v7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
