@@ -21,22 +21,29 @@ class _WordFormWidgetState extends State<WordFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: widget._formKey,
-        child: TextFormField(
-            decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(context.pcw(2)),
-                hintText: '¿Qué palabra deseas buscar?',
-                hintStyle: TextStyle(fontSize: context.pcw(4))),
-            keyboardType: TextInputType.text,
-            validator: (value) {
-              final _validation = validate(value);
-              if (_validation != null) {
-                context.bloc<RaeBloc>().add(RaeValidationFails());
-              }
-              return _validation;
-            },
-            onSaved: (value) {
-              context.bloc<RaeBloc>().add(RaeSubmit(word: value));
-            }));
+      key: widget._formKey,
+      child: TextFormField(
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(context.pcw(2)),
+            hintText: '¿Qué palabra deseas buscar?',
+            hintStyle: TextStyle(fontSize: context.pcw(4))),
+        keyboardType: TextInputType.text,
+        validator: (value) {
+          final _validation = validate(value);
+          if (_validation != null) {
+            context.bloc<RaeBloc>().add(RaeValidationFails());
+          }
+          return _validation;
+        },
+        onSaved: (value) {
+          context.bloc<RaeBloc>().add(RaeSubmit(word: value));
+        },
+        onChanged: (v) {
+          if (v.isEmpty) {
+            context.bloc<RaeBloc>().add(RaeRestore());
+          }
+        },
+      ),
+    );
   }
 }
