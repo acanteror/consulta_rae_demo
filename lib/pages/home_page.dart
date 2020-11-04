@@ -47,40 +47,51 @@ class HomePage extends StatelessWidget {
                   formKey: _formKey,
                 ),
           body: SafeArea(
-              child: Stack(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: context.pcw(32)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: const TitleWidget(),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: context.pcw(12)),
-                        child: WordFormWidget(formKey: _formKey),
+            child: Stack(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: context.pcw(32),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: const TitleWidget(),
                       ),
-                    ),
-                    state.notFound
-                        ? Expanded(
-                            flex: 2,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: context.pcw(2), vertical: context.pcw(6)),
-                              child: NotFoundAlertWidget(word: state.word),
+                      Expanded(
+                        flex: 3,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: context.pcw(12),
+                          ),
+                          child: WordFormWidget(formKey: _formKey),
+                        ),
+                      ),
+                      state.notFound
+                          ? Expanded(
+                              flex: 2,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: context.pcw(2),
+                                  vertical: context.pcw(6),
+                                ),
+                                child: NotFoundAlertWidget(word: state.word),
+                              ),
+                            )
+                          : Expanded(
+                              flex: 2,
+                              child: Container(),
                             ),
-                          )
-                        : Expanded(flex: 2, child: Container()),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              state is RaeLoading ? Center(child: CircularProgressIndicator()) : Container(),
-            ],
-          )),
+                state is RaeLoading ? Center(child: CircularProgressIndicator()) : Container(),
+              ],
+            ),
+          ),
         );
       },
     );

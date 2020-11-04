@@ -10,31 +10,40 @@ class ResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     String _word = '';
     String _result = '';
-    return BlocBuilder<RaeBloc, RaeState>(builder: (context, state) {
-      if (state is RaeSuccess) {
-        _word = state.word;
-        _result = state.result;
-      }
-      return WillPopScope(
-        onWillPop: () async {
-          context.bloc<RaeBloc>().add(RaeRestore());
-          return true;
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(_word.toUpperCase()),
-          ),
-          body: SingleChildScrollView(
-            child: Container(
-                padding: EdgeInsets.all(context.pcw(5)),
+    return BlocBuilder<RaeBloc, RaeState>(
+      builder: (context, state) {
+        if (state is RaeSuccess) {
+          _word = state.word;
+          _result = state.result;
+        }
+        return WillPopScope(
+          onWillPop: () async {
+            context.bloc<RaeBloc>().add(RaeRestore());
+            return true;
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                _word.toUpperCase(),
+              ),
+            ),
+            body: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.all(
+                  context.pcw(5),
+                ),
                 alignment: Alignment.bottomLeft,
-                child: Text(_result,
-                    style: TextStyle(
-                      fontSize: context.pcw(4),
-                    ))),
+                child: Text(
+                  _result,
+                  style: TextStyle(
+                    fontSize: context.pcw(4),
+                  ),
+                ),
+              ),
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
