@@ -18,7 +18,7 @@ class RaeServiceImpl extends RaeService {
     final _description = _extractDescription(_result);
     bool _isValid = _validateWord(word, _description);
     if (_isValid) {
-      return _description;
+      return _description.replaceAll('Real Academia Española © Todos los derechos reservados', '');
     } else {
       throw WordNotFoundException(word);
     }
