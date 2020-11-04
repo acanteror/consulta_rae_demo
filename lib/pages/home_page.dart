@@ -17,70 +17,72 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
 
-    return BlocConsumer<RaeBloc, RaeState>(listener: (context, state) {
-      if (state is RaeError) {
-        Get.snackbar(
-          '¡Ups! Error', 
-          'Parece que se ha producido un error que no entraba en nuestros planes',
-          icon: Icon(Icons.error_outline, color: Colors.red,),
-          shouldIconPulse: true,
-          isDismissible: true,
-          duration: Duration(seconds: 13),
-        );
-      }
-      if (state is RaeSuccess) {
-        Get.to(ResultPage());
-      }
-      if (state is RaeInitial) {
-        _formKey.currentState?.reset();
-      }
-    }, builder: (context, state) {
-      return Scaffold(
-        floatingActionButton: state.searchFAB
-            ? SearchFABWidget(formKey: _formKey)
-            : RestoreFABWidget(
-                formKey: _formKey,
-              ),
-        body: SafeArea(
-            child: Stack(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: context.pcw(32)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: const TitleWidget(),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: context.pcw(12)),
-                      child: WordFormWidget(formKey: _formKey),
-                    ),
-                  ),
-                  state.notFound
-                      ? Expanded(
-                          flex: 2,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: context.pcw(2),
-                                vertical: context.pcw(6)),
-                            child: NotFoundAlertWidget(word: state.word),
-                          ),
-                        )
-                      : Expanded(flex: 2, child: Container()),
-                ],
-              ),
+    return BlocConsumer<RaeBloc, RaeState>(
+      listener: (context, state) {
+        if (state is RaeError) {
+          Get.snackbar(
+            '¡Ups! Error',
+            'Parece que se ha producido un error que no entraba en nuestros planes',
+            icon: Icon(
+              Icons.error_outline,
+              color: Colors.red,
             ),
-            state is RaeLoading
-                ? Center(child: CircularProgressIndicator())
-                : Container(),
-          ],
-        )),
-      );
-    });
+            shouldIconPulse: true,
+            isDismissible: true,
+            duration: Duration(seconds: 13),
+          );
+        }
+        if (state is RaeSuccess) {
+          Get.to(ResultPage());
+        }
+        if (state is RaeInitial) {
+          _formKey.currentState?.reset();
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          floatingActionButton: state.searchFAB
+              ? SearchFABWidget(formKey: _formKey)
+              : RestoreFABWidget(
+                  formKey: _formKey,
+                ),
+          body: SafeArea(
+              child: Stack(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: context.pcw(32)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: const TitleWidget(),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: context.pcw(12)),
+                        child: WordFormWidget(formKey: _formKey),
+                      ),
+                    ),
+                    state.notFound
+                        ? Expanded(
+                            flex: 2,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: context.pcw(2), vertical: context.pcw(6)),
+                              child: NotFoundAlertWidget(word: state.word),
+                            ),
+                          )
+                        : Expanded(flex: 2, child: Container()),
+                  ],
+                ),
+              ),
+              state is RaeLoading ? Center(child: CircularProgressIndicator()) : Container(),
+            ],
+          )),
+        );
+      },
+    );
   }
 }
