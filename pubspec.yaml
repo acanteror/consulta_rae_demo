@@ -26,7 +26,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^4.1.1
-  bloc_test: ^7.0.0
+  bloc_test: ^7.1.0
   flutter_launcher_icons: ^0.8.0
 
 flutter_icons:
