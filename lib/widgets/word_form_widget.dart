@@ -31,16 +31,16 @@ class _WordFormWidgetState extends State<WordFormWidget> {
         validator: (value) {
           final _validation = validate(value);
           if (_validation != null) {
-            context.bloc<RaeBloc>().add(RaeValidationFails());
+            context.read()<RaeBloc>().add(RaeValidationFails());
           }
           return _validation;
         },
         onSaved: (value) {
-          context.bloc<RaeBloc>().add(RaeSubmit(word: value));
+          context.read<RaeBloc>().add(RaeSubmit(word: value));
         },
         onChanged: (v) {
           if (v.isEmpty) {
-            context.bloc<RaeBloc>().add(RaeRestore());
+            context.read<RaeBloc>().add(RaeRestore());
           }
         },
       ),

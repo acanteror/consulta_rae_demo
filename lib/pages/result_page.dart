@@ -18,7 +18,7 @@ class ResultPage extends StatelessWidget {
         }
         return WillPopScope(
           onWillPop: () async {
-            context.bloc<RaeBloc>().add(RaeRestore());
+            context.read<RaeBloc>().add(RaeRestore());
             return true;
           },
           child: Scaffold(

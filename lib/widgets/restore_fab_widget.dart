@@ -15,7 +15,7 @@ class RestoreFABWidget extends StatelessWidget {
     return FloatingActionButton(
       onPressed: () {
         _formKey.currentState.reset();
-        context.bloc<RaeBloc>().add(RaeRestore());
+        context.read<RaeBloc>().add(RaeRestore());
       },
       tooltip: 'Restaurar',
       child: Icon(Icons.restore),
