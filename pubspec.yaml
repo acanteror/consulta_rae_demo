@@ -19,7 +19,7 @@ dependencies:
   equatable: ^1.2.0
   lumberdash: ^2.1.1
   colorize_lumberdash: ^2.1.0
-  get: ^2.13.0
+  get: ^3.17.1
   google_fonts: ^1.1.0
 
 dev_dependencies:
