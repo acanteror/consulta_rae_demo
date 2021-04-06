@@ -15,8 +15,8 @@ class MyBlocObserver extends BlocObserver {
   }
 
   @override
-  void onError(Cubit cubit, Object error, StackTrace stacktrace) {
-    super.onError(cubit, error, stacktrace);
+  void onError(BlocBase bloc, Object error, StackTrace stacktrace) {
+    super.onError(bloc, error, stacktrace);
     logError('BlocObserver :: Error --> $error, $stacktrace');
   }
 }

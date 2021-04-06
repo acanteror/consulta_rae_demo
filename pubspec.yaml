@@ -13,21 +13,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.12.1
-  html: ^0.14.0+3
-  flutter_bloc: ^6.1.0
-  equatable: ^1.2.5
-  lumberdash: ^2.1.1
-  colorize_lumberdash: ^2.1.0
-  get: ^3.17.1
-  google_fonts: ^1.1.0
+  http: ^0.13.1
+  html: ^0.15.0
+  flutter_bloc: ^7.0.0
+  equatable: ^2.0.0
+  get: ^4.1.3
+  google_fonts: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mockito: ^4.1.1
-  bloc_test: ^7.1.0
-  flutter_launcher_icons: ^0.8.0
+  lumberdash: ^3.0.0
+  colorize_lumberdash: ^3.0.0
+  mockito: ^5.0.3
+  bloc_test: ^8.0.0
+  flutter_launcher_icons: ^0.9.0
 
 flutter_icons:
   android: "ic_launcher"

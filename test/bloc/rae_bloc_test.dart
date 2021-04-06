@@ -1,6 +1,6 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:bloc_test/bloc_test.dart';
 import 'package:rae_test/bloc/rae_bloc.dart';
 import 'package:rae_test/exception/custom_exception.dart';
 import 'package:rae_test/service/rae_service.dart';
@@ -20,7 +20,7 @@ final tRaeNotValid =
     RaeNotValid(word: tNotValidWord, notFound: false, searchFAB: false);
 final tRaeError = RaeError();
 
-class MockRaeBloc extends MockBloc<RaeState> implements RaeBloc {}
+class MockRaeBloc extends MockBloc<RaeEvent, RaeState> implements RaeBloc {}
 
 class MockRaeService extends Mock implements RaeService {}
 
@@ -63,7 +63,7 @@ void main() {
     blocTest<RaeBloc, RaeState>(
       'emits [] when nothing is added',
       build: () => raeBloc,
-      expect: [],
+      expect: () => [],
     );
 
     test('has a correct initialState', () {
@@ -78,7 +78,7 @@ void main() {
         return raeBloc;
       },
       act: (bloc) async => bloc.add(RaeSubmit(word: tCorrectWord)),
-      expect: <RaeState>[tRaeLoading, tRaeSuccess],
+      expect: () => <RaeState>[tRaeLoading, tRaeSuccess],
     );
 
     blocTest<RaeBloc, RaeState>(
@@ -88,14 +88,14 @@ void main() {
         return raeBloc;
       },
       act: (bloc) async => bloc.add(RaeSubmit(word: tIncorrectWord)),
-      expect: <RaeState>[tRaeLoading, tRaeNotFound],
+      expect: () => <RaeState>[tRaeLoading, tRaeNotFound],
     );
 
     blocTest<RaeBloc, RaeState>(
       'emits [tRaeNotValid] when RaeValidationFails event is added',
       build: () => raeBloc,
       act: (bloc) async => bloc.add(RaeValidationFails()),
-      expect: <RaeState>[tRaeNotValid],
+      expect: () => <RaeState>[tRaeNotValid],
     );
 
     blocTest<RaeBloc, RaeState>(
@@ -105,14 +105,14 @@ void main() {
         return raeBloc;
       },
       act: (bloc) async => bloc.add(RaeSubmit(word: tCorrectWord)),
-      expect: <RaeState>[tRaeLoading, tRaeError],
+      expect: () => <RaeState>[tRaeLoading, tRaeError],
     );
 
     blocTest<RaeBloc, RaeState>(
       'emits [tRaeRestored] when RaeRestore is added',
       build: () => raeBloc,
       act: (bloc) async => bloc.add(RaeRestore()),
-      expect: <RaeState>[tRaeRestored],
+      expect: () => <RaeState>[tRaeRestored],
     );
   });
 }

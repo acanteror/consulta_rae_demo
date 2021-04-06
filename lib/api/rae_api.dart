@@ -5,16 +5,14 @@ abstract class RaeApi {
   Future<String> fetchData(String word);
 }
 
-
 class RaeApiImpl extends RaeApi {
   final http.Client client;
 
   RaeApiImpl({client}) : this.client = client ?? http.Client();
 
-
   @override
   Future<String> fetchData(String word) async {
-    final url = 'https://dle.rae.es/$word';
+    final url = Uri.dataFromString('https://dle.rae.es/$word');
     final response = await client.get(url);
 
     if (response.statusCode == 200) {
@@ -23,5 +21,4 @@ class RaeApiImpl extends RaeApi {
       throw ResponseException(response.statusCode);
     }
   }
-
 }
