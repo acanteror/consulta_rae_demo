@@ -11,7 +11,7 @@ import 'package:rae_test/widgets/word_form_widget.dart';
 import 'package:rae_test/extension/context_extension.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          floatingActionButton: state.searchFAB
+          floatingActionButton: state.searchFAB!
               ? SearchFABWidget(formKey: _formKey)
               : RestoreFABWidget(
                   formKey: _formKey,
@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
                           child: WordFormWidget(formKey: _formKey),
                         ),
                       ),
-                      state.notFound
+                      state.notFound!
                           ? Expanded(
                               flex: 2,
                               child: Padding(

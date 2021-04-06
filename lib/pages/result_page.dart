@@ -4,12 +4,12 @@ import 'package:rae_test/bloc/rae_bloc.dart';
 import 'package:rae_test/extension/context_extension.dart';
 
 class ResultPage extends StatelessWidget {
-  const ResultPage({Key key}) : super(key: key);
+  const ResultPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String _word = '';
-    String _result = '';
+    String? _word = '';
+    String? _result = '';
     return BlocBuilder<RaeBloc, RaeState>(
       builder: (context, state) {
         if (state is RaeSuccess) {
@@ -24,7 +24,7 @@ class ResultPage extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               title: Text(
-                _word.toUpperCase(),
+                _word!.toUpperCase(),
               ),
             ),
             body: SingleChildScrollView(
@@ -34,7 +34,7 @@ class ResultPage extends StatelessWidget {
                 ),
                 alignment: Alignment.bottomLeft,
                 child: Text(
-                  _result,
+                  _result!,
                   style: TextStyle(
                     fontSize: context.pcw(4),
                   ),

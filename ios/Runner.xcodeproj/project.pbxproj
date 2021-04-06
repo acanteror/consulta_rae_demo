@@ -146,7 +146,7 @@
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
-				5A84F54B46F7B42058C79E4B /* [CP] Embed Pods Frameworks */,
+				5AB69BD90981991B234C5FB5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -219,7 +219,7 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
 		};
-		5A84F54B46F7B42058C79E4B /* [CP] Embed Pods Frameworks */ = {
+		5AB69BD90981991B234C5FB5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -362,7 +362,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = $FLUTTER_BUILD_NUMBER;
+				CURRENT_PROJECT_VERSION = "$FLUTTER_BUILD_NUMBER";
 				DEVELOPMENT_TEAM = THPG969YGC;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -378,7 +378,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = $FLUTTER_BUILD_NAME;
+				MARKETING_VERSION = "$FLUTTER_BUILD_NAME";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.raeTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -500,7 +500,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = $FLUTTER_BUILD_NUMBER;
+				CURRENT_PROJECT_VERSION = "$FLUTTER_BUILD_NUMBER";
 				DEVELOPMENT_TEAM = THPG969YGC;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -516,7 +516,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = $FLUTTER_BUILD_NAME;
+				MARKETING_VERSION = "$FLUTTER_BUILD_NAME";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.raeTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -532,7 +532,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = $FLUTTER_BUILD_NUMBER;
+				CURRENT_PROJECT_VERSION = "$FLUTTER_BUILD_NUMBER";
 				DEVELOPMENT_TEAM = THPG969YGC;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -548,7 +548,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = $FLUTTER_BUILD_NAME;
+				MARKETING_VERSION = "$FLUTTER_BUILD_NAME";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.raeTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

@@ -6,8 +6,8 @@ import 'package:rae_test/helper/word_form_validation.dart';
 
 class WordFormWidget extends StatefulWidget {
   const WordFormWidget({
-    Key key,
-    @required GlobalKey<FormState> formKey,
+    Key? key,
+    required GlobalKey<FormState> formKey,
   })  : _formKey = formKey,
         super(key: key);
 
@@ -29,7 +29,7 @@ class _WordFormWidgetState extends State<WordFormWidget> {
             hintStyle: TextStyle(fontSize: context.pcw(4))),
         keyboardType: TextInputType.text,
         validator: (value) {
-          final _validation = validate(value);
+          final _validation = validate(value!);
           if (_validation != null) {
             context.read()<RaeBloc>().add(RaeValidationFails());
           }

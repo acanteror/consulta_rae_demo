@@ -4,8 +4,8 @@ import 'package:rae_test/bloc/rae_bloc.dart';
 
 class RestoreFABWidget extends StatelessWidget {
   const RestoreFABWidget({
-    Key key,
-    @required GlobalKey<FormState> formKey,
+    Key? key,
+    required GlobalKey<FormState> formKey,
   })  : _formKey = formKey,
         super(key: key);
 
@@ -14,7 +14,7 @@ class RestoreFABWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        _formKey.currentState.reset();
+        _formKey.currentState!.reset();
         context.read<RaeBloc>().add(RaeRestore());
       },
       tooltip: 'Restaurar',

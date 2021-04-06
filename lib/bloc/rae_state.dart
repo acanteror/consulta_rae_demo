@@ -1,16 +1,16 @@
 part of 'rae_bloc.dart';
 
 abstract class RaeState extends Equatable {
-  final String word;
-  final bool notFound;
-  final bool searchFAB;
+  final String? word;
+  final bool? notFound;
+  final bool? searchFAB;
   const RaeState({
     this.word,
     this.notFound,
     this.searchFAB,
   });
   @override
-  List<Object> get props => [word, notFound, searchFAB];
+  List<Object?> get props => [word, notFound, searchFAB];
 }
 
 class RaeInitial extends RaeState {
@@ -50,10 +50,10 @@ class RaeLoading extends RaeState {
 }
 
 class RaeSuccess extends RaeState {
-  final String word;
-  final String result;
-  final bool notFound;
-  final bool searchFAB;
+  final String? word;
+  final String? result;
+  final bool? notFound;
+  final bool? searchFAB;
 
   RaeSuccess({this.word, this.result, this.notFound, this.searchFAB})
       : super(
@@ -63,11 +63,11 @@ class RaeSuccess extends RaeState {
         );
 
   @override
-  List<Object> get props => [word, notFound, searchFAB, result];
+  List<Object?> get props => [word, notFound, searchFAB, result];
 }
 
 class RaeNotFound extends RaeState {
-  final String word;
+  final String? word;
   final bool notFound;
   final bool searchFAB;
 
@@ -79,8 +79,8 @@ class RaeNotFound extends RaeState {
 }
 
 class RaeNotValid extends RaeState {
-  final String word;
-  final bool notFound;
+  final String? word;
+  final bool? notFound;
   final bool searchFAB;
 
   RaeNotValid({

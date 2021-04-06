@@ -25,8 +25,8 @@ class MockRaeBloc extends MockBloc<RaeEvent, RaeState> implements RaeBloc {}
 class MockRaeService extends Mock implements RaeService {}
 
 void main() {
-  RaeBloc raeBloc;
-  RaeService raeService;
+  RaeBloc? raeBloc;
+  RaeService? raeService;
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -62,20 +62,20 @@ void main() {
   group('raeBlocTest', () {
     blocTest<RaeBloc, RaeState>(
       'emits [] when nothing is added',
-      build: () => raeBloc,
+      build: () => raeBloc!,
       expect: () => [],
     );
 
     test('has a correct initialState', () {
-      expect(raeBloc.state, tRaeInitial);
+      expect(raeBloc!.state, tRaeInitial);
     });
 
     blocTest<RaeBloc, RaeState>(
       'emits [tRaeLoading, tRaeSuccess] when RaeSubmit event is added and service returns correct description',
       build: () {
-        when(raeService.consult(tCorrectWord))
+        when(raeService!.consult(tCorrectWord))
             .thenAnswer((_) async => tDescription);
-        return raeBloc;
+        return raeBloc!;
       },
       act: (bloc) async => bloc.add(RaeSubmit(word: tCorrectWord)),
       expect: () => <RaeState>[tRaeLoading, tRaeSuccess],
@@ -84,8 +84,8 @@ void main() {
     blocTest<RaeBloc, RaeState>(
       'emits [tRaeLoading, tRaeNotFound] when RaeSubmit event is added and service returns WordNotFoundException',
       build: () {
-        when(raeService.consult(any)).thenThrow(WordNotFoundException());
-        return raeBloc;
+        when(raeService!.consult(any)).thenThrow(WordNotFoundException());
+        return raeBloc!;
       },
       act: (bloc) async => bloc.add(RaeSubmit(word: tIncorrectWord)),
       expect: () => <RaeState>[tRaeLoading, tRaeNotFound],
@@ -93,7 +93,7 @@ void main() {
 
     blocTest<RaeBloc, RaeState>(
       'emits [tRaeNotValid] when RaeValidationFails event is added',
-      build: () => raeBloc,
+      build: () => raeBloc!,
       act: (bloc) async => bloc.add(RaeValidationFails()),
       expect: () => <RaeState>[tRaeNotValid],
     );
@@ -101,8 +101,8 @@ void main() {
     blocTest<RaeBloc, RaeState>(
       'emits [tRaeLoading, tRaeError] when RaeSubmit event is added and service returns ResponseException',
       build: () {
-        when(raeService.consult(any)).thenThrow(ResponseException());
-        return raeBloc;
+        when(raeService!.consult(any)).thenThrow(ResponseException());
+        return raeBloc!;
       },
       act: (bloc) async => bloc.add(RaeSubmit(word: tCorrectWord)),
       expect: () => <RaeState>[tRaeLoading, tRaeError],
@@ -110,7 +110,7 @@ void main() {
 
     blocTest<RaeBloc, RaeState>(
       'emits [tRaeRestored] when RaeRestore is added',
-      build: () => raeBloc,
+      build: () => raeBloc!,
       act: (bloc) async => bloc.add(RaeRestore()),
       expect: () => <RaeState>[tRaeRestored],
     );

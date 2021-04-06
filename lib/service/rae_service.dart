@@ -4,7 +4,7 @@ import 'package:rae_test/api/rae_api.dart';
 import 'package:rae_test/exception/custom_exception.dart';
 
 abstract class RaeService {
-  Future<String> consult(String word);
+  Future<String> consult(String? word);
 }
 
 class RaeServiceImpl extends RaeService {
@@ -13,7 +13,7 @@ class RaeServiceImpl extends RaeService {
   RaeServiceImpl({raeApi}) : this.raeApi = raeApi ?? Get.find<RaeApi>();
 
   @override
-  Future<String> consult(String word) async {
+  Future<String> consult(String? word) async {
     final _result = await raeApi.fetchData(word);
     final _description = _extractDescription(_result);
     bool _isValid = _validateWord(word, _description);
@@ -25,10 +25,10 @@ class RaeServiceImpl extends RaeService {
   }
 
   String _extractDescription(String _result) {
-    return parse(_result).getElementById('resultados').text;
+    return parse(_result).getElementById('resultados')!.text;
   }
 
-  bool _validateWord(String word, String result) {
+  bool _validateWord(String? word, String result) {
     bool isValid = true;
     final error = 'Aviso: La palabra $word no está en el Diccionario.';
     if (result.startsWith(error)) isValid = false;

@@ -1,4 +1,4 @@
-String validate(String value) {
+String? validate(String value) {
   if (value.isEmpty) {
     return 'Debes introducir al menos una palabra';
   }

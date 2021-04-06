@@ -8,8 +8,8 @@ import 'package:rae_test/exception/custom_exception.dart';
 class MockHttpClient extends Mock implements http.Client {}
 
 void main() {
-  RaeApi raeApi;
-  MockHttpClient mockHttpClient;
+  late RaeApi raeApi;
+  MockHttpClient? mockHttpClient;
 
   setUp(() {
     mockHttpClient = MockHttpClient();
@@ -17,12 +17,12 @@ void main() {
   });
 
   void setUpMockHttpClientSuccess200() {
-    when(mockHttpClient.get(any))
+    when(mockHttpClient!.get(Uri.parse('https://dle.rae.es/')))
         .thenAnswer((_) async => http.Response('html test response', 200));
   }
 
   void setUpMockHttpClientFailure404() {
-    when(mockHttpClient.get(any))
+    when(mockHttpClient!.get(Uri.parse('https://dle.xXxXxX.es/')))
         .thenAnswer((_) async => http.Response('Something went wrong', 404));
   }
 
@@ -38,8 +38,7 @@ void main() {
 
       raeApi.fetchData(tWord);
 
-      verify(mockHttpClient.get(Uri.dataFromString('$urlBase$tWord')))
-          .called(1);
+      verify(mockHttpClient!.get(Uri.parse('$urlBase$tWord'))).called(1);
     });
 
     test(

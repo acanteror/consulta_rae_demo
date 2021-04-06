@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:rae_test/exception/custom_exception.dart';
 
 abstract class RaeApi {
-  Future<String> fetchData(String word);
+  Future<String> fetchData(String? word);
 }
 
 class RaeApiImpl extends RaeApi {
@@ -11,8 +11,8 @@ class RaeApiImpl extends RaeApi {
   RaeApiImpl({client}) : this.client = client ?? http.Client();
 
   @override
-  Future<String> fetchData(String word) async {
-    final url = Uri.dataFromString('https://dle.rae.es/$word');
+  Future<String> fetchData(String? word) async {
+    final url = Uri.parse('https://dle.rae.es/$word');
     final response = await client.get(url);
 
     if (response.statusCode == 200) {

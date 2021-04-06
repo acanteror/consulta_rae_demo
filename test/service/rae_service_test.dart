@@ -8,8 +8,8 @@ import 'package:rae_test/service/rae_service.dart';
 class MockRaeApi extends Mock implements RaeApi {}
 
 void main() {
-  RaeService raeService;
-  MockRaeApi mockRaeApi;
+  late RaeService raeService;
+  MockRaeApi? mockRaeApi;
 
   setUp(() {
     mockRaeApi = MockRaeApi();
@@ -28,14 +28,14 @@ void main() {
   test(
     '''should return description if api return contain with descriptions''',
     () async {
-      when(mockRaeApi.fetchData(any))
+      when(mockRaeApi!.fetchData(any))
           .thenAnswer((_) async => tResultOK);
       
       final description = await raeService.consult(tWord);
       
       expect(description, tDescriptionOK );
       
-      verify(mockRaeApi.fetchData(tWord)).called(1);
+      verify(mockRaeApi!.fetchData(tWord)).called(1);
       verifyNoMoreInteractions(mockRaeApi);
     },
   );
@@ -50,14 +50,14 @@ void main() {
   test(
     '''should throw WordNotFoundException if api return contains error message''',
     () async {
-      when(mockRaeApi.fetchData(any))
+      when(mockRaeApi!.fetchData(any))
           .thenAnswer((_) async => tResultKO);
       
       final call = raeService.consult(tWord);
       
       expect(() => call, throwsA(TypeMatcher<WordNotFoundException>()));
       
-      verify(mockRaeApi.fetchData(tWord)).called(1);
+      verify(mockRaeApi!.fetchData(tWord)).called(1);
       verifyNoMoreInteractions(mockRaeApi);
     },
   );
