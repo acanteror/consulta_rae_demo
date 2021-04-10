@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:rae_test/bloc/rae_bloc.dart';
 import 'package:rae_test/exception/custom_exception.dart';
 import 'package:rae_test/service/rae_service.dart';
@@ -24,9 +24,13 @@ class MockRaeBloc extends MockBloc<RaeEvent, RaeState> implements RaeBloc {}
 
 class MockRaeService extends Mock implements RaeService {}
 
+class RaeEventFake extends Fake implements RaeEvent {}
+
+class RaeStateFake extends Fake implements RaeState {}
+
 void main() {
-  RaeBloc? raeBloc;
-  RaeService? raeService;
+  late RaeBloc raeBloc;
+  late RaeService raeService;
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -35,14 +39,20 @@ void main() {
     raeBloc = RaeBloc(raeService: raeService);
   });
 
+  setUpAll(() {
+    registerFallbackValue<RaeState>(RaeStateFake());
+    registerFallbackValue<RaeEvent>(RaeEventFake());
+  });
+
   tearDown(() {
-    raeBloc?.close();
+    raeBloc.close();
   });
 
   group('whenListen', () {
     test("Let's mock the RaeBloc's stream!", () {
       // Create Mock RaeBloc Instance
       final _mockedBloc = MockRaeBloc();
+      registerFallbackValue<RaeEvent>(RaeSubmit());
 
       // Stub the listen with a fake Stream
       whenListen(
@@ -53,7 +63,7 @@ void main() {
       // Expect that the RaeState instance emitted the stubbed Stream of
       // states
       expectLater(
-          _mockedBloc,
+          _mockedBloc.stream,
           emitsInOrder(
               <RaeState>[tRaeInitial, tRaeLoading, tRaeSuccess, tRaeInitial]));
     });
@@ -62,20 +72,20 @@ void main() {
   group('raeBlocTest', () {
     blocTest<RaeBloc, RaeState>(
       'emits [] when nothing is added',
-      build: () => raeBloc!,
+      build: () => raeBloc,
       expect: () => [],
     );
 
     test('has a correct initialState', () {
-      expect(raeBloc!.state, tRaeInitial);
+      expect(raeBloc.state, tRaeInitial);
     });
 
     blocTest<RaeBloc, RaeState>(
       'emits [tRaeLoading, tRaeSuccess] when RaeSubmit event is added and service returns correct description',
       build: () {
-        when(raeService!.consult(tCorrectWord))
+        when(() => raeService.consult(tCorrectWord))
             .thenAnswer((_) async => tDescription);
-        return raeBloc!;
+        return raeBloc;
       },
       act: (bloc) async => bloc.add(RaeSubmit(word: tCorrectWord)),
       expect: () => <RaeState>[tRaeLoading, tRaeSuccess],
@@ -84,8 +94,9 @@ void main() {
     blocTest<RaeBloc, RaeState>(
       'emits [tRaeLoading, tRaeNotFound] when RaeSubmit event is added and service returns WordNotFoundException',
       build: () {
-        when(raeService!.consult(any)).thenThrow(WordNotFoundException());
-        return raeBloc!;
+        when(() => raeService.consult(tIncorrectWord))
+            .thenThrow(WordNotFoundException());
+        return raeBloc;
       },
       act: (bloc) async => bloc.add(RaeSubmit(word: tIncorrectWord)),
       expect: () => <RaeState>[tRaeLoading, tRaeNotFound],
@@ -93,7 +104,7 @@ void main() {
 
     blocTest<RaeBloc, RaeState>(
       'emits [tRaeNotValid] when RaeValidationFails event is added',
-      build: () => raeBloc!,
+      build: () => raeBloc,
       act: (bloc) async => bloc.add(RaeValidationFails()),
       expect: () => <RaeState>[tRaeNotValid],
     );
@@ -101,8 +112,9 @@ void main() {
     blocTest<RaeBloc, RaeState>(
       'emits [tRaeLoading, tRaeError] when RaeSubmit event is added and service returns ResponseException',
       build: () {
-        when(raeService!.consult(any)).thenThrow(ResponseException());
-        return raeBloc!;
+        when(() => raeService.consult(tCorrectWord))
+            .thenThrow(ResponseException());
+        return raeBloc;
       },
       act: (bloc) async => bloc.add(RaeSubmit(word: tCorrectWord)),
       expect: () => <RaeState>[tRaeLoading, tRaeError],
@@ -110,7 +122,7 @@ void main() {
 
     blocTest<RaeBloc, RaeState>(
       'emits [tRaeRestored] when RaeRestore is added',
-      build: () => raeBloc!,
+      build: () => raeBloc,
       act: (bloc) async => bloc.add(RaeRestore()),
       expect: () => <RaeState>[tRaeRestored],
     );
