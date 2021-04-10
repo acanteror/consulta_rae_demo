@@ -11,7 +11,7 @@ The main feature is to consult RAE web dictionary.
 - http call with [http](https://pub.dev/packages/http) package
 - html parse with [html](https://pub.dev/packages/html) package
 - Dependency injection and navigation with [get](https://pub.dev/packages/get) package
-- Test with flutter_test, [mockito](https://pub.dev/packages/mockito) and [bloc_test](https://pub.dev/packages?q=bloc_test)
+- Test with flutter_test, [bloc_test](https://pub.dev/packages?q=bloc_test), [mockito](https://pub.dev/packages/mockito) and [mocktail](https://pub.dev/packages/mocktail)
 
 A few resources to get you started if this is your first Flutter project:
 
