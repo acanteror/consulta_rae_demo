@@ -6,6 +6,6 @@ import 'package:http/http.dart' as http;
 
 void configureInyector() {
   Get.lazyPut<RaeApi>(() => RaeApiImpl(client: http.Client()));
-  Get.lazyPut<RaeService>(() => RaeServiceImpl(raeApi: RaeApiImpl()));
-  Get.lazyPut<RaeBloc>(() => RaeBloc(raeService: RaeServiceImpl()));
+  Get.lazyPut<RaeService>(() => RaeServiceImpl(raeApi: Get.find<RaeApi>()));
+  Get.lazyPut<RaeBloc>(() => RaeBloc(raeService: Get.find<RaeService>()));
 }

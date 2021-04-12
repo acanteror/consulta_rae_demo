@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:rae_test/api/rae_api.dart';
 import 'package:rae_test/exception/custom_exception.dart';
@@ -10,7 +9,7 @@ abstract class RaeService {
 class RaeServiceImpl extends RaeService {
   RaeApi raeApi;
 
-  RaeServiceImpl({raeApi}) : this.raeApi = raeApi ?? Get.find<RaeApi>();
+  RaeServiceImpl({required this.raeApi});
 
   @override
   Future<String> consult(String? word) async {
@@ -18,7 +17,8 @@ class RaeServiceImpl extends RaeService {
     final _description = _extractDescription(_result);
     bool _isValid = _validateWord(word, _description);
     if (_isValid) {
-      return _description.replaceAll('Real Academia Española © Todos los derechos reservados', '');
+      return _description.replaceAll(
+          'Real Academia Española © Todos los derechos reservados', '');
     } else {
       throw WordNotFoundException(word);
     }
