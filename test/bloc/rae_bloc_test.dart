@@ -13,11 +13,21 @@ final tRaeInitial = RaeInitial();
 final tRaeRestored = RaeRestored();
 final tRaeLoading = RaeLoading();
 final tRaeSuccess = RaeSuccess(
-    word: tCorrectWord, result: tDescription, notFound: false, searchFAB: true);
-final tRaeNotFound =
-    RaeNotFound(word: tIncorrectWord, notFound: true, searchFAB: false);
-final tRaeNotValid =
-    RaeNotValid(word: tNotValidWord, notFound: false, searchFAB: false);
+  word: tCorrectWord,
+  result: tDescription,
+  notFound: false,
+  searchFAB: true,
+);
+final tRaeNotFound = RaeNotFound(
+  word: tIncorrectWord,
+  notFound: true,
+  searchFAB: false,
+);
+final tRaeNotValid = RaeNotValid(
+  word: tNotValidWord,
+  notFound: false,
+  searchFAB: false,
+);
 final tRaeError = RaeError();
 
 class MockRaeBloc extends MockBloc<RaeEvent, RaeState> implements RaeBloc {}
@@ -52,7 +62,6 @@ void main() {
     test("Let's mock the RaeBloc's stream!", () {
       // Create Mock RaeBloc Instance
       final _mockedBloc = MockRaeBloc();
-      registerFallbackValue<RaeEvent>(RaeSubmit());
 
       // Stub the listen with a fake Stream
       whenListen(
@@ -126,5 +135,17 @@ void main() {
       act: (bloc) async => bloc.add(RaeRestore()),
       expect: () => <RaeState>[tRaeRestored],
     );
+  });
+
+  group('raeEvents ', () {
+    test('tRaeRestore props is empty', () {
+      final RaeRestore _raeRestore = RaeRestore();
+      expect(_raeRestore.props.isEmpty, true);
+    });
+
+    test('tRaeSubmit props is not empty', () {
+      final RaeSubmit _raeSubmit = RaeSubmit(word: 'word');
+      expect(_raeSubmit.props.isNotEmpty, true);
+    });
   });
 }

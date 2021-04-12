@@ -8,7 +8,7 @@ class WordFormWidget extends StatefulWidget {
   const WordFormWidget({
     Key? key,
     required GlobalKey<FormState> formKey,
-  })  : _formKey = formKey,
+  })   : _formKey = formKey,
         super(key: key);
 
   final GlobalKey<FormState> _formKey;
@@ -36,7 +36,7 @@ class _WordFormWidgetState extends State<WordFormWidget> {
           return _validation;
         },
         onSaved: (value) {
-          context.read<RaeBloc>().add(RaeSubmit(word: value));
+          context.read<RaeBloc>().add(RaeSubmit(word: value!));
         },
         onChanged: (v) {
           if (v.isEmpty) {
