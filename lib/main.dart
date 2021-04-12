@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => RaeBloc(),
+      create: (BuildContext context) => Get.find<RaeBloc>(),
       child: GetMaterialApp(
         title: 'ConsultaRae',
         debugShowCheckedModeBanner: false,
