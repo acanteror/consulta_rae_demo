@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:get/get.dart';
 import 'package:rae_test/exception/custom_exception.dart';
 import 'package:rae_test/service/rae_service.dart';
 
@@ -11,9 +10,7 @@ part 'rae_state.dart';
 
 class RaeBloc extends Bloc<RaeEvent, RaeState> {
   RaeService raeService;
-  RaeBloc({raeService})
-      : this.raeService = raeService ?? Get.find(),
-        super(RaeInitial());
+  RaeBloc({required this.raeService}) : super(RaeInitial());
 
   @override
   Stream<RaeState> mapEventToState(
@@ -30,7 +27,10 @@ class RaeBloc extends Bloc<RaeEvent, RaeState> {
 
     if (event is RaeValidationFails) {
       yield RaeNotValid(
-          word: state.word, notFound: state.notFound, searchFAB: false);
+        word: state.word,
+        notFound: state.notFound,
+        searchFAB: false,
+      );
     }
   }
 
